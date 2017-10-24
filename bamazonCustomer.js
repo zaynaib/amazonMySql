@@ -17,24 +17,17 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId);
-  //queryAllSongs();
   displayQuery();
    
 });
-
-  
-
-
-//create some CRUD functions (create read update delete)
 
 /*
 Running this application will first display all of the items available for sale. 
 Include the ids, names, and prices of products for sale.
 */
 
-//(item_id, product_name, department_name,price,stock_quantity)
 //work on display functionality
-function displayQuery(){
+var displayQuery = function(){
 	connection.query("SELECT * FROM products", function(err,res){
 		console.log(err);
 		for(var i = 0; i<res.length;i++){
@@ -61,9 +54,6 @@ inquirer.prompt([{
   }]).then( function (response) {
       var prodId = parseInt(response.idSelect);
       var units = response.unitSelect;
-    
-      //console.log(response.idSelect);
-      //console.log(response.unitSelect);
       placeOrder(prodId,units);
 
   })
@@ -122,7 +112,6 @@ function updateProduct(id,customerUnits,currentQuantity) {
       }
     ],
     function(err, res) {
-      //console.log(res.affectedRows);
       console.log(res.affectedRows);
     });
 
@@ -131,7 +120,6 @@ function updateProduct(id,customerUnits,currentQuantity) {
   connection.end();//be careful with connection end statements
 
 }
-
 
 
 
