@@ -20,7 +20,6 @@ connection.connect(function(err) {
    
 });
 
-
 function question(){
 inquirer.prompt([{
    name: 'managerActions',
@@ -29,14 +28,14 @@ inquirer.prompt([{
    choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product']
   }]).then( function (response) {
       
-      console.log(response.managerActions);
+      //console.log(response.managerActions);
 
       //create a switch case for all manager actions
       managerActions(response.managerActions);
   })
 };
 
-question();
+//question();
 
 
 //list every available item: the item IDs, names, prices, and quantities.
@@ -69,7 +68,7 @@ function lowInventory(){
 }//end of function
 
 //your app should display a prompt that will let the manager "add more" of any item currently in the store
-function addInventory(itemId,quanityAdded) {
+function addInventory() {
 	inquirer.prompt([{
     name: 'inventoryId',
     message: 'What is the id of the item you would like to add?',
@@ -82,16 +81,48 @@ function addInventory(itemId,quanityAdded) {
    }
    ]).then( function (response) {
       
-      console.log(response.invetoryId);
+      console.log(response.inventoryId);
       console.log(response.increaseInventory);
-  });//end of prompt
 
+      var changeInventory ={
+      	itemId : response.inventoryId,
+      	add: response.increaseInventory
+      }
+      console.log(changeInventory);
+
+  });//end of prompt
 }
 
 //it should allow the manager to add a completely new product to the store
-function addProduct(){
+//chain the two functions
+
+
+//https://html5hive.org/how-to-chain-javascript-promises/
+/*
+function addNewProduct(id,num){
+	console.log("Updating all Rocky Road quantities...\n");
+  var query = connection.query(
+    "UPDATE products SET ? WHERE ?",
+    [
+      {
+        stock_quantity: num +
+      },
+      {
+        item_id: id
+      }
+    ],
+    function(err, res) {
+      console.log(res.affectedRows + " products updated!\n");
+      // Call deleteProduct AFTER the UPDATE completes
+      deleteProduct();
+    }
+  );
+
+  // logs the actual query being run
+  console.log(query.sql);
 
 }
+*/
 
 function managerActions(questionResponse){
 	switch(questionResponse){
@@ -109,7 +140,7 @@ function managerActions(questionResponse){
 		break;
 
 		case 'Add New Product':
-			addProduct();
+			addNewProduct();
 		break;
 
 
